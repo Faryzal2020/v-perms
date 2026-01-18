@@ -1,0 +1,86 @@
+// This schema is designed to be copied into your existing Prisma schema
+// Compatible with PostgreSQL, MySQL, and SQLite
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  priority    Int      @default(0)
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userRoles        UserRole[]
+  rolePermissions  RolePermission[]
+  inheritedRoles   RoleInheritance[] @relation("ParentRole")
+  inheritsFrom     RoleInheritance[] @relation("ChildRole")
+
+  @@map("roles")
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  description String?
+  category    String?
+  createdAt   DateTime @default(now())
+
+  rolePermissions RolePermission[]
+  userPermissions UserPermission[]
+
+  @@index([category])
+  @@map("permissions")
+}
+
+model UserRole {
+  userId     String
+  roleId     String
+  assignedAt DateTime @default(now())
+
+  // Note: Replace 'User' with your actual User model name
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  granted      Boolean  @default(true)
+  assignedAt   DateTime @default(now())
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model UserPermission {
+  userId       String
+  permissionId String
+  granted      Boolean  @default(true)
+  assignedAt   DateTime @default(now())
+
+  // Note: Replace 'User' with your actual User model name
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([userId, permissionId])
+  @@map("user_permissions")
+}
+
+model RoleInheritance {
+  roleId         String
+  inheritsFromId String
+  priority       Int      @default(0)
+  createdAt      DateTime @default(now())
+
+  role         Role @relation("ParentRole", fields: [roleId], references: [id], onDelete: Cascade)
+  inheritsFrom Role @relation("ChildRole", fields: [inheritsFromId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, inheritsFromId])
+  @@map("role_inheritance")
+}

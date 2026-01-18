@@ -1,0 +1,48 @@
+node_modules/
+.env
+*.log
+.DS_Store
+dist/
+
+# Documentation drafts and work-in-progress
+docs/drafts/
+*.draft.md
+NOTES.md
+TODO.md
+
+# Development and testing
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.cache/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Build artifacts
+build/
+out/
+
+# OS files
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

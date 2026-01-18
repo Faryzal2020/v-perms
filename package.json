@@ -1,0 +1,41 @@
+{
+  "name": "@faryzal2020/v-perms",
+  "version": "1.0.1",
+  "description": "Minimal, flexible role-based permission system for JavaScript/Bun.js applications with Prisma",
+  "main": "src/index.js",
+  "type": "module",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepublishOnly": "echo 'Ready to publish'"
+  },
+  "keywords": [
+    "permissions",
+    "authorization",
+    "rbac",
+    "roles",
+    "access-control",
+    "prisma",
+    "bun",
+    "nodejs"
+  ],
+  "author": "faryzal2020",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/faryzal2020/v-perms"
+  },
+  "peerDependencies": {
+    "@prisma/client": "^5.0.0"
+  },
+  "optionalDependencies": {
+    "redis": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  }
+}
